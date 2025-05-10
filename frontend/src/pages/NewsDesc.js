@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Layout from '../components/Layout'
 import Spinner from '../components/Spinner'
+import { base_url } from '../config/config'
 
 function NewsDesc() {
   const [loading, setLoading] = useState(false)
@@ -12,7 +13,7 @@ function NewsDesc() {
   const getData = async () => {
     setLoading(true)
     try {
-      const result = await axios.post(`http://localhost:8000/api/newsitems/getnewsitembyid/${params.newsid}`, { "_id": params.newsid.toString() });
+      const result = await axios.post(`${base_url}/newsitems/getnewsitembyid/${params.newsid}`, { "_id": params.newsid.toString() });
       setNewsItem(result.data)
       console.log(newsItem)
       setLoading(false)

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import Layout from '../components/Layout'
 import Spinner from '../components/Spinner'
+import { base_url } from '../config/config'
 
 const HomePage = () => {
   const [loading, setLoading] = useState(false)
@@ -14,7 +15,7 @@ const HomePage = () => {
   const getData = async () => {
     setLoading(true)
     try {
-      const result = await axios.get('http://localhost:8000/api/newsitems/getallnewsitems')
+      const result = await axios.get(`${base_url}/newsitems/getallnewsitems`)
       setLoading(false)
       setNewsItems(result.data)
     } catch (error) {

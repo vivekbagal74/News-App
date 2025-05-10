@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import Spinner from '../components/Spinner';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { base_url } from '../config/config';
 
 
 const PostedNewsItems = () => {
@@ -16,7 +17,7 @@ const PostedNewsItems = () => {
     try {
       setLoading(true);
       console.log(id)
-      await axios.delete(`http://localhost:8000/api/newsitems/deletenews/${id}`);
+      await axios.delete(`${base_url}/newsitems/deletenews/${id}`);
       toast('News Deleted Successfully');
       setNewsItems(newsItems.filter(item => item._id !== id));
     } catch (error) {
@@ -38,7 +39,7 @@ const PostedNewsItems = () => {
           const userData = JSON.parse(user);
 
           const response = await axios.post(
-            `http://localhost:8000/api/newsitems/getnewsitemsbyemail/${userData.email}`,
+            `${base_url}/newsitems/getnewsitemsbyemail/${userData.email}`,
             { "email": userData.email }
           );
           setNewsItems(response.data);

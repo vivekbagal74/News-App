@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
 import { useNavigate, useParams } from 'react-router-dom';
+import { base_url } from '../config/config';
 
 const EditNews = () => {
   const [title, setTitle] = useState('');
@@ -18,7 +19,7 @@ const EditNews = () => {
     const fetchNewsItem = async () => {
       setLoading(true);
       try {
-        const response = await axios.post(`http://localhost:8000/api/newsitems/getnewsitembyid/${params.newsid}`);
+        const response = await axios.post(`${base_url}/newsitems/getnewsitembyid/${params.newsid}`);
         const newsItem = response.data;
         setTitle(newsItem.title);
         setDescription(newsItem.description);
@@ -48,7 +49,7 @@ const EditNews = () => {
         content
       };
 
-      await axios.put(`http://localhost:8000/api/newsitems/editnews/${params.newsid}`, payload);
+      await axios.put(`${base_url}/newsitems/editnews/${params.newsid}`, payload);
       setLoading(false);
       toast('News updated successfully', 'success');
       navigate('/home');

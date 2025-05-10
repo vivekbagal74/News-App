@@ -1,25 +1,26 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { AiOutlineClose } from 'react-icons/ai'
-import { toast } from 'react-toastify'
-import Spinner from '../components/Spinner'
-import { useNavigate } from 'react-router-dom'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { toast } from "react-toastify";
+import Spinner from "../components/Spinner";
+import { useNavigate } from "react-router-dom";
+import { base_url } from "../config/config";
 
 const LandingPage = () => {
-  const [showLoginForm, setShowLoginForm] = useState(true)
-  const [showRegisterForm, setShowRegisterForm] = useState(false)
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+  const [showLoginForm, setShowLoginForm] = useState(true);
+  const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // Function to validate email address
   const validateEmail = (email) => {
     // Regular expression for basic email validation
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return regex.test(email)
-  }
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
 
   // Function to handle form submission
   const login = async () => {
@@ -27,7 +28,7 @@ const LandingPage = () => {
     try {
       // Basic form validation
       if (!email || !password) {
-        toast('Please enter both email and password')
+        toast("Please enter both email and password");
         setLoading(false);
         return;
       }
@@ -37,18 +38,18 @@ const LandingPage = () => {
         password,
       };
 
-      const response = await axios.post('http://localhost:8000/api/users/login', payload);
+      const response = await axios.post(`${base_url}/users/login`, payload);
       const user = response.data;
 
       if (user) {
-        localStorage.setItem('user', JSON.stringify(user));
-        toast('Login successful');
-        navigate('/home');
+        localStorage.setItem("user", JSON.stringify(user));
+        toast("Login successful");
+        navigate("/home");
       } else {
-        toast('Invalid email or password');
+        toast("Invalid email or password");
       }
     } catch (error) {
-      toast('Something went wrong');
+      toast("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -61,21 +62,21 @@ const LandingPage = () => {
     try {
       // Basic form validation
       if (!name || !email || !password) {
-        toast('Please fill in all fields');
+        toast("Please fill in all fields");
         setLoading(false);
         return;
       }
 
       // Validate email
       if (!validateEmail(email)) {
-        toast('Please enter a valid email address');
+        toast("Please enter a valid email address");
         setLoading(false);
         return;
       }
 
       // Check password length
       if (password.length < 8) {
-        toast('Password must be at least 8 characters long');
+        toast("Password must be at least 8 characters long");
         setLoading(false);
         return;
       }
@@ -83,27 +84,25 @@ const LandingPage = () => {
       const payload = {
         name,
         email,
-        password
+        password,
       };
 
-      const response = await axios.post('http://localhost:8000/api/users/register', payload);
+      const response = await axios.post(`${base_url}/users/register`, payload);
 
       if (response.data === "User added successfully") {
-        toast('Registration successful, Please login');
-        setName('');
-        setEmail('');
-        setPassword('');
+        toast("Registration successful, Please login");
+        setName("");
+        setEmail("");
+        setPassword("");
         setLoading(false);
         setShowRegisterForm(false);
         setShowLoginForm(true);
-      }
-      else {
-        toast('User with this email already exists');
+      } else {
+        toast("User with this email already exists");
         setLoading(false);
       }
-
     } catch (error) {
-      toast('Something went wrong...');
+      toast("Something went wrong...");
       setLoading(false);
     }
   };
@@ -121,14 +120,19 @@ const LandingPage = () => {
         </h1>
 
         <p className="text-lg">
-          The News App is your go-to platform for staying updated with the latest news and developments. With a user-friendly interface, it provides easy access to a wide range of news articles, ensuring you're always in the know. Whether it's breaking news, sports updates, or entertainment buzz, the News App has you covered. Join us today and never miss a headline!
+          The News App is your go-to platform for staying updated with the
+          latest news and developments. With a user-friendly interface, it
+          provides easy access to a wide range of news articles, ensuring you're
+          always in the know. Whether it's breaking news, sports updates, or
+          entertainment buzz, the News App has you covered. Join us today and
+          never miss a headline!
         </p>
         <div className="space-x-5">
           <button
             className="bg-gray-300 px-10 py-3"
             onClick={() => {
-              setShowRegisterForm(false)
-              setShowLoginForm(true)
+              setShowRegisterForm(false);
+              setShowLoginForm(true);
             }}
           >
             LOGIN
@@ -136,8 +140,8 @@ const LandingPage = () => {
           <button
             className="bg-[#2B8F74] px-10 py-3 text-white"
             onClick={() => {
-              setShowLoginForm(false)
-              setShowRegisterForm(true)
+              setShowLoginForm(false);
+              setShowRegisterForm(true);
             }}
           >
             REGISTER
@@ -230,13 +234,13 @@ const LandingPage = () => {
           size={30}
           color="gray"
           onClick={() => {
-            setShowLoginForm(false)
-            setShowRegisterForm(false)
+            setShowLoginForm(false);
+            setShowRegisterForm(false);
           }}
         />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default LandingPage
+export default LandingPage;

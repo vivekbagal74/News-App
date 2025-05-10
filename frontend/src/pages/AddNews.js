@@ -4,6 +4,7 @@ import Layout from '../components/Layout'
 import axios from 'axios'
 import Spinner from '../components/Spinner'
 import { useNavigate } from 'react-router-dom'
+import { base_url } from '../config/config'
 
 const AddNews = () => {
 
@@ -28,8 +29,9 @@ const AddNews = () => {
         postedByuserid: user._id,
         postedByemail: user.email,
       }
+      
 
-      await axios.post('http://localhost:8000/api/newsitems/addnewsitem', payload)
+      await axios.post(`${base_url}/newsitems/addnewsitem`, payload)
       setLoading(false)
       toast('News added successfully', 'success')
       navigate('/home')
