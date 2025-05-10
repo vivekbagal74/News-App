@@ -13,7 +13,7 @@ app.use(express.json());
 app.use('/api/newsitems/', newsRoute);
 app.use('/api/users/', userRoute);
 
-app.get('/', (req, res) => res.send('Invalid Requrest...'));
+app.get('/', (req, res) => res.send('Invalid Request...'));
 
 const port = process.env.PORT || 8000;
 
